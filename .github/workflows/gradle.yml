@@ -28,7 +28,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+    - name: Setup SDKMAN and Gradle
+      uses: sdkman/sdkman-action@v1
       with:
-        arguments: clean build
+        candidate: gradle
+        version: 8.4
+
+    - name: Build with Gradle
+      run: gradle clean build --no-daemon
