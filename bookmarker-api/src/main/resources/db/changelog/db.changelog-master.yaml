@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: BOOKMARK/master.yml
+      relativeToChangelogFile: true

@@ -1,0 +1,10 @@
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 1', 'http://bookmark1.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 2', 'http://bookmark2.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 3', 'http://bookmark3.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 4', 'http://bookmark4.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 5', 'http://bookmark5.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 6', 'http://bookmark6.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 7', 'http://bookmark7.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 8', 'http://bookmark8.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 9', 'http://bookmark9.com', CURRENT_TIMESTAMP);
+INSERT INTO tb_bookmarks (title, url, created_at) VALUES ('Bookmark 10', 'http://bookmark10.com', CURRENT_TIMESTAMP);
