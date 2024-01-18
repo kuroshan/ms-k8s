@@ -29,7 +29,7 @@ jobs:
         distribution: 'temurin'
     
     - name: Setup SDKMAN and Gradle
-      uses: sdkman/sdkman-action@v2.0.0
+      uses: sfesenko/setup-sdkman@v1
       with:
         candidate: gradle
         version: 8.4
