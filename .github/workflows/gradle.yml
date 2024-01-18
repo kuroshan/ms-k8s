@@ -35,4 +35,4 @@ jobs:
         version: 8.4
 
     - name: Build with Gradle
-      run: gradle clean build --no-daemon
+      run: gradle clean build jibDockerBuild --no-daemon

@@ -55,7 +55,7 @@ jib {
 	}
 	to {
 		image = 'bookmarker-api'
-		tags = ['latest', '2.0']
+		tags = ['latest', '3.0']
 	}
 	container {
 		ports = ['8080']
