@@ -28,11 +28,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - name: Setup SDKMAN and Gradle
-      uses: sfesenko/setup-sdkman@v1
-      with:
-        candidate: gradle
-        version: 8.4
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v0
 
     - name: Build with Gradle
-      run: gradle clean build jibDockerBuild --no-daemon
+      run: ./gradlew clean build jibDockerBuild --no-daemon
