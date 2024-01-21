@@ -47,4 +47,4 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ${{ secrets.DOCKER_USERNAME }}/bookmarker-api
-        tags: @${{ steps.get-ms-version.outputs.version }}, latest
+        tags: '@${{ steps.get-ms-version.outputs.version }}', latest
