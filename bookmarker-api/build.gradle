@@ -54,7 +54,7 @@ jib {
 		image = 'eclipse-temurin:17-jre-focal'
 	}
 	to {
-		image = 'bookmarker-api'
+		image = 'kuroshan/bookmarker-api'
 		tags = ['latest', version]
 	}
 	container {
