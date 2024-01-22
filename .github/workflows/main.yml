@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  
   build:
     runs-on: ubuntu-latest
     defaults:
@@ -26,34 +27,24 @@ jobs:
       uses: gradle/actions/setup-gradle@v0
 
     - name: Build with Gradle
-      run: ./gradlew clean bootJar --no-daemon
+      run: ./gradlew clean jibDockerBuild --no-daemon
 
     - name: Get version
       id: get-version
       run: |
           echo "VERSION=$(grep "version = " build.gradle | awk '{print $3}' | tr -d \'\" )" >> $GITHUB_ENV
+  
   push:
     needs: build
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./bookmarker-api
-
+ 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: ./bookmarker-api
-        push: true
-        tags: 5.0
+    - if: ${{ github.ref == 'refs/heads/master' }}
+      name: Build and Publish Docker Image
+      run: |
+        ./mvnw clean package jib:dockerBuild -DskipTests
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookmarker-api:6.0
