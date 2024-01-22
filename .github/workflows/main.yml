@@ -37,9 +37,6 @@ jobs:
   push:
     needs: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./bookmarker-api
  
     steps:
     - if: ${{ github.ref == 'refs/heads/master' }}
