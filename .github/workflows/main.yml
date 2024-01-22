@@ -54,5 +54,6 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
+        context: ./bookmarker-api
         push: true
         tags: 5.0
