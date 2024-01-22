@@ -56,4 +56,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/bookmarker-api:${{ env.VERSION }}
+        tags: kuroshan/bookmarker-api:${{ env.VERSION }}
