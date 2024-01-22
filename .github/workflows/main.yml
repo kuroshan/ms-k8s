@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  build-and-push-to-dockerhub:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,9 +28,15 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew clean jibDockerBuild --no-daemon
-         
+    
+    - name: Get version
+      id: get-ms-version
+      run: |
+        ms_version=$(echo "$(grep "version = " build.gradle | awk '{print $3}' | tr -d \'\" )")
+        echo version=$ms_version >> $GITHUB_OUTPUT
+
     - if: ${{ github.ref == 'refs/heads/master' }}
       name: Publish Docker Image
       run: |
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookmarker-api
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookmarker-api:${{ steps.get-ms-version.outputs.version }}
