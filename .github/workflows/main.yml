@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  
+
   build:
     runs-on: ubuntu-latest
     defaults:
@@ -43,8 +43,7 @@ jobs:
  
     steps:
     - if: ${{ github.ref == 'refs/heads/master' }}
-      name: Build and Publish Docker Image
+      name: Publish Docker Image
       run: |
-        ./mvnw clean package jib:dockerBuild -DskipTests
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/bookmarker-api:6.0
