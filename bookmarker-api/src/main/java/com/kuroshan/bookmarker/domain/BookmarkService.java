@@ -1,7 +1,5 @@
 package com.kuroshan.bookmarker.domain;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +22,14 @@ public class BookmarkService {
     int pageNo = page < 1 ? 0 : page - 1;
     Pageable pageable = PageRequest.of(pageNo, 10, Sort.Direction.DESC, "createdAt");
     Page<BookmarkDTO> bookmarkPage = repository.findBookmarks(pageable);
+    return new BookmarksDTO(bookmarkPage);
+  }
+
+  @Transactional(readOnly = true)
+  public BookmarksDTO searchBookmarks(String query, Integer page) {
+    int pageNo = page < 1 ? 0 : page - 1;
+    Pageable pageable = PageRequest.of(pageNo, 10, Sort.Direction.DESC, "createdAt");
+    Page<BookmarkDTO> bookmarkPage = repository.searchBookmarks(query, pageable);
     return new BookmarksDTO(bookmarkPage);
   }
 

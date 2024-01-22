@@ -1,1 +1,7 @@
-http://localhost:8080/api/bookmarks?page=1
+### 
+# Fetch all bookmarks
+GET http://localhost:8080/api/bookmarks?page=1
+
+### 
+# Search for a bookmark
+GET http://localhost:8080/api/bookmarks?query=mark 1

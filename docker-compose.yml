@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  bookmarker-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: user-bm
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bookmarker
+    ports:
+      - 5432:5432
+  
+  bookmarker-api:
+    build:
+      context: bookmarker-api
+      dockerfile: Dockerfile.layered
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bookmarker-db:5432/bookmarker
+      SPRING_DATASOURCE_USERNAME: user-bm
+      SPRING_DATASOURCE_PASSWORD: password
+    ports:
+      - 18080:8080
+    restart: always
+    depends_on:
+      - bookmarker-db
