@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bookmarker-api
+  labels:
+    app: bookmarker-api
+    version: "1.0"
+spec:
+  containers:
+  - image: kuroshan/bookmarker-api:3.0
+    name: bookmarker-api
+    ports:
+    - containerPort: 8080

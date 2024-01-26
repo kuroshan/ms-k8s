@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookmarker-api
+  labels:
+    app: bookmarker-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookmarker-api
+  template:
+    metadata:
+      labels:
+        app: bookmarker-api
+    spec:
+      containers:
+      - image: kuroshan/bookmarker-api:3.0
+        name: bookmarker-api
+

@@ -21,6 +21,10 @@ function stop() {
     docker-compose -f ${dc_infra} rm -f
 }
 
+function status() {
+    docker-compose -f ${dc_infra} ps
+}
+
 function restart() {
     stop
     sleep 3
