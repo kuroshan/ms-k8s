@@ -7,7 +7,7 @@ chmod +x ./run.sh
 ./run.sh stop
 ./run.sh restart
 
-
+minikube start --memory 12288 --cpus 8 --vm-driver=virtualbox
 kubectl get pods
 kubectl run bookmarker-api --image=kuroshan/bookmarker-api:3.0 --port=8080
 kubectl logs bookmarker-api -f
@@ -29,3 +29,18 @@ kubectl rollout history deployments bookmarker-api
 kubectl apply -f 1-postgresdb.yaml
 kubectl delete -f 1-postgresdb.yaml
 kubectl apply -f .
+
+
+https://spacelift.io/blog/prometheus-kubernetes
+
+helm install kube-prometheus-stack \
+  --create-namespace \
+  --namespace kube-prometheus-stack \
+  prometheus-community/kube-prometheus-stack
+helm list -n kube-prometheus-stack
+kubectl -n kube-prometheus-stack get pods
+kubectl port-forward -n kube-prometheus-stack svc/kube-prometheus-stack-prometheus 9090:9090
+kube-prometheus-stack/svc/kube-prometheus-stack-prometheus:9090
+helm uninstall prometheus -n kube-prometheus-stack
+
+kubectl port-forward deployment.apps/bookmarker-api-deployment 8081:8080
