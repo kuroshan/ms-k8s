@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.kuroshan'
-version = '4.0'
+version = '5.0'
 
 java {
 	sourceCompatibility = '17'
@@ -33,6 +33,8 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
