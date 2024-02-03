@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bookmarker
-          image: kuroshan/bookmarker-api:3.0
+          image: kuroshan/bookmarker-api:5.0
           ports:
             - containerPort: 8080
           env:
