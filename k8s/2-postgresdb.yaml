@@ -18,9 +18,18 @@ spec:
           - name: postgres
             containerPort: 5432
         env:
-          - name: POSTGRES_USER
-            value: userdb
-          - name: POSTGRES_PASSWORD
-            value: passdb
           - name: POSTGRES_DB
-            value: bookmarkerdb
+            valueFrom:
+              configMapKeyRef:
+                name: bookmarker-config
+                key: postgres_dbname
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: bookmarker-secrets
+                key: postgres_username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: bookmarker-secrets
+                key: postgres_password

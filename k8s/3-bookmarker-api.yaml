@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookmarker-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookmarker-api
+  template:
+    metadata:
+      labels:
+        app: bookmarker-api
+      # annotations:
+      #   prometheus.io/scrape: 'true'
+      #   prometheus.io/port: '8080'
+      #   prometheus.io/path: '/actuator/prometheus'
+    spec:
+      containers:
+        - name: bookmarker-api
+          image: kuroshan/bookmarker-api:5.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: bookmarker-config
+                  key: postgres_host
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: bookmarker-config
+                  key: postgres_dbname
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: bookmarker-config
+                  key: postgres_port
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: bookmarker-secrets
+                  key: postgres_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookmarker-secrets
+                  key: postgres_password
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: bookmarker-api-service
+#   labels:
+#     app: bookmarker-api
+# spec:
+#   selector:
+#     app: bookmarker-api
+#   ports:
+#     - protocol: TCP
+#       name: http-traffic
+#       port: 8080
+#       targetPort: 8080
+
+# ---
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: bookmarker-api-service-monitor
+# spec:
+#   selector:
+#     matchLabels:
+#       app: bookmarker-api
+#   endpoints:
+#     - port: http-traffic
+#       path: "/actuator/prometheus"
