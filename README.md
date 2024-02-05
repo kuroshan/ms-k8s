@@ -47,6 +47,27 @@ minikube ip
 192.168.59.108 k8s-server.com
 /etc/hosts
 http://k8s-server.com/bookmarker-api/api/bookmarks
+http://k8s-server.com/bookmarker-api/api/bookmarks?page=1
+http://k8s-server.com/bookmarker-api/api/bookmarks?query=mark 1
+ab -n 100000 -c 100 'http://k8s-server.com/bookmarker-api/api/bookmarks?query=mark%201'
+
+
+
+https://blog.theswarnim.com/monitoring-spring-boot-microservices-with-prometheus-and-grafana
+
+helm install kube-prometheus-stack \
+  --create-namespace \
+  --namespace monitoring \
+  prometheus-community/kube-prometheus-stack
+
+kubectl --namespace monitoring get pods -l "release=kube-prometheus-stack"
+
+kubectl get deployment -n monitoring
+kubectl get svc -n monitoring
+
+
+
+
 
 
 

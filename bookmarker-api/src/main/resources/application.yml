@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: bookmarker-api
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,5 +27,16 @@ management:
       exposure:
         include: "health,info,metrics,prometheus"
   endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
     health:
       show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true        
+  metrics:
+    tags:
+      application: ${spring.application.name}
