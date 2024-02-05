@@ -30,6 +30,27 @@ kubectl apply -f 1-postgresdb.yaml
 kubectl delete -f 1-postgresdb.yaml
 kubectl apply -f .
 
+kubectl create configmap db-config --from-literal=db_host=postgres --from-literal=db_name=appdb
+kubectl delete configmap db-config
+kubectl create configmap db-config --from-literal=db_host=postgres --from-literal=db_name=appdb --dry-run -o yaml > 1-config.yaml
+kubectl apply -f .
+kubectl create secret generic bookmarker-secrets --from-literal=postgres_username=userdb --from-literal=postgres_password=passdb --dry-run -o yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 https://spacelift.io/blog/prometheus-kubernetes
 
@@ -43,4 +64,27 @@ kubectl port-forward -n kube-prometheus-stack svc/kube-prometheus-stack-promethe
 kube-prometheus-stack/svc/kube-prometheus-stack-prometheus:9090
 helm uninstall prometheus -n kube-prometheus-stack
 
-kubectl port-forward deployment.apps/bookmarker-api-deployment 8081:8080
+kubectl port-forward deployment.apps/bookmarker-api 8081:8080
+
+
+https://bell-sw.com/blog/spring-boot-monitoring-in-kubernetes-with-prometheus-and-grafana/
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+helm install prometheus \
+  --create-namespace \
+  --namespace monitoring \
+  bitnami/kube-prometheus
+kubectl port-forward --namespace monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
+http://localhost:9090
+helm install grafana \
+  --namespace monitoring \
+  bitnami/grafana
+echo "Password: $(kubectl get secret grafana-admin --namespace monitoring -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 -d)"
+kubectl port-forward --namespace monitoring  svc/grafana 3000:3000
+http://localhost:3000
+
+helm uninstall grafana -n monitoring
+helm uninstall prometheus -n monitoring
+
+https://engineering.linecorp.com/en/blog/monitoring-a-spring-boot-app-in-kubernetes-what-i-learned-from-devoxx-belgium-2019
