@@ -35,9 +35,18 @@ kubectl delete configmap db-config
 kubectl create configmap db-config --from-literal=db_host=postgres --from-literal=db_name=appdb --dry-run -o yaml > 1-config.yaml
 kubectl apply -f .
 kubectl create secret generic bookmarker-secrets --from-literal=postgres_username=userdb --from-literal=postgres_password=passdb --dry-run -o yaml
+kubectl delete -f .
+kubectl apply -f .
+nodePort: 30090
+http://192.168.59.108:30090/api/bookmarks
+http://192.168.59.108:30090/actuator/prometheus
+minikube addons enable ingress
+kubectl apply -f .
 
-
-
+minikube ip
+192.168.59.108 k8s-server.com
+/etc/hosts
+http://k8s-server.com/bookmarker-api/api/bookmarks
 
 
 

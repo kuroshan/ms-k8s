@@ -1,24 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookmarker-api-svc
+spec:
+  type: NodePort
+  selector:
+    app: bookmarker-api-pod
+  ports:
+    - name: app-port-mapping
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30090
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookmarker-api
+  name: bookmarker-api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookmarker-api
+      app: bookmarker-api-pod
   template:
     metadata:
       labels:
-        app: bookmarker-api
+        app: bookmarker-api-pod
       # annotations:
       #   prometheus.io/scrape: 'true'
       #   prometheus.io/port: '8080'
       #   prometheus.io/path: '/actuator/prometheus'
     spec:
       containers:
-        - name: bookmarker-api
-          image: kuroshan/bookmarker-api:5.0
+        - name: bookmarker
+          image: kuroshan/bookmarker-api:6.0
           ports:
             - containerPort: 8080
           env:
