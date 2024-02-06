@@ -26,10 +26,6 @@ spec:
     metadata:
       labels:
         app: bookmarker-api-pod
-      # annotations:
-      #   prometheus.io/scrape: 'true'
-      #   prometheus.io/port: '8080'
-      #   prometheus.io/path: '/actuator/prometheus'
     spec:
       containers:
         - name: bookmarker
@@ -64,32 +60,3 @@ spec:
                 secretKeyRef:
                   name: bookmarker-secrets
                   key: postgres_password
-
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: bookmarker-api-service
-#   labels:
-#     app: bookmarker-api
-# spec:
-#   selector:
-#     app: bookmarker-api
-#   ports:
-#     - protocol: TCP
-#       name: http-traffic
-#       port: 8080
-#       targetPort: 8080
-
-# ---
-# apiVersion: monitoring.coreos.com/v1
-# kind: ServiceMonitor
-# metadata:
-#   name: bookmarker-api-service-monitor
-# spec:
-#   selector:
-#     matchLabels:
-#       app: bookmarker-api
-#   endpoints:
-#     - port: http-traffic
-#       path: "/actuator/prometheus"

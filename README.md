@@ -64,9 +64,30 @@ kubectl --namespace monitoring get pods -l "release=kube-prometheus-stack"
 
 kubectl get deployment -n monitoring
 kubectl get svc -n monitoring
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-prometheus 9090:9090
+
+helm delete kube-prometheus-stack \
+  --namespace monitoring 
+kubectl delete namespace monitoring
 
 
 
+
+
+
+
+
+
+
+https://mehmetozkaya.medium.com/monitor-spring-boot-custom-metrics-with-kubernetes-using-prometheus-and-grafana-5d0c7961899f
+helm install prometheus \
+  --create-namespace \
+  --namespace monitoring \
+  bitnami/kube-prometheus
+kubectl --namespace monitoring get svc
+kubectl port-forward --namespace monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
+helm uninstall prometheus -n monitoring
+kubectl delete namespace monitoring
 
 
 
